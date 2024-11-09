@@ -1,9 +1,11 @@
 Tenzies 🎲
+
 A fun and interactive dice game built using React! The goal of the game is to roll until all dice are the same. 
 Click each die to freeze it at its current value between rolls. If all dice match and are held, you win, and confetti celebrates your victory!
 -Features to check for amounts of rolls and time took will be added shortly!
 
 🚀 Demo
+
 Play a game of Tenzies here: https://adam-tenzies.netlify.app/
 
 📋 Features

@@ -32,16 +32,19 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   margin-left: auto;
-  padding: 0 0em 0em 1em;
-  height: 7vh;
+  height: 8vh;
   width: 100px;
   background-color: lightgrey;
   border-radius: 5px;
   grid-column: 5;
 }
 .dice-stats p {
-  margin: 0;
+  margin: 0 0 .2em 0;
+}
+span {
+  margin-left: 1em;
 }
 
 .title {

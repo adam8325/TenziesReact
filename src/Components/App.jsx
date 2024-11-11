@@ -5,9 +5,15 @@ import Confetti from "react-confetti"
 
 export default function App() {
 
+    // State
+
     const [dice, setDice] = React.useState(allNewDice())
     const [tenzies, setTenzies] = React.useState(false)
     const [rollCount, setRollCount] = React.useState(0)
+    const [diceTimer, setDiceTimer] = React.useState(0)
+    const [timerStarted, setTimerStarted] = React.useState(false);
+
+    // Effects
     
     React.useEffect(() => {
         const allHeld = dice.every(die => die.isHeld)
@@ -15,8 +21,22 @@ export default function App() {
         const allSameValue = dice.every(die => die.value === firstValue)
         if (allHeld && allSameValue) {
             setTenzies(true)
+            setTimerStarted(false)
         }
     }, [dice])
+
+    React.useEffect(() => {
+        let interval = ""
+
+        if (timerStarted) {
+         interval = setInterval(() =>
+            setDiceTimer(prevState => prevState + 1), 1000);
+        }
+        return () => clearInterval(interval);
+
+    }, [timerStarted])
+
+    // Functions
 
     function generateNewDie() {
         return {
@@ -35,8 +55,12 @@ export default function App() {
     }
 
     
-    
     function rollDice() {
+
+        if (!timerStarted) {
+            setTimerStarted(true); 
+          }
+
         if(!tenzies) {
             setDice(oldDice => oldDice.map(die => {
                 return die.isHeld ? 
@@ -48,6 +72,8 @@ export default function App() {
             setTenzies(false)
             setDice(allNewDice())
             setRollCount(0)
+            setDiceTimer(0)
+            setTimerStarted(false)
         }
     }
     
@@ -58,6 +84,8 @@ export default function App() {
                 die
         }))
     }
+
+    // Render
     
     const diceElements = dice.map(die => (
         <Die 
@@ -68,7 +96,9 @@ export default function App() {
         />
     ))
 
-    
+    const styles = {
+        textDecoration: tenzies? "underline" : "" 
+    }
     
     return (
         <main>
@@ -76,8 +106,8 @@ export default function App() {
             <div className="header">
                 <h1 className="title">Tenzies</h1>
                 <div className="dice-stats">
-                    <p>Rolls:<span> {rollCount}</span></p>
-                    {/* <p>Time:<span></span></p> */}
+                    <p>Rolls:<span style={styles}>{rollCount}</span></p>
+                    <p>Time:<span style={styles}>{diceTimer}</span></p>
                 </div>
             </div>
             
